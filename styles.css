@@ -1,0 +1,952 @@
+:root {
+    --bg-dark: #0b1120;
+    --bg-surface: #131c31;
+    --bg-card: #19233c;
+    --primary: #00e5ff;
+    --primary-dark: #00b8d4;
+    --accent: #a3e635;
+    --accent-hover: #84cc16;
+    --text-light: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(0, 229, 255, 0.18);
+    --radius: 14px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   ANIMACIONES PERSONALIZADAS DE CICLISMO
+========================================== */
+@keyframes girarRueda {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulsarGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); }
+    50% { box-shadow: 0 0 28px rgba(0, 229, 255, 0.7); }
+}
+
+@keyframes lineaCarril {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+}
+
+@keyframes aparecerTarjeta {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes reboteCarrito {
+    0%, 100% { transform: scale(1); }
+    40% { transform: scale(1.22) rotate(-5deg); }
+    70% { transform: scale(0.95) rotate(3deg); }
+}
+
+/* ==========================================
+   HEADER Y NAVEGACIÓN
+========================================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 6%;
+    background: rgba(11, 17, 32, 0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.logo-rueda {
+    color: var(--primary);
+    animation: girarRueda 8s linear infinite;
+    transition: animation-duration 0.3s ease;
+}
+
+.logo:hover .logo-rueda {
+    animation-duration: 1.2s;
+    color: var(--accent);
+}
+
+.acento-texto {
+    color: var(--primary);
+}
+
+nav {
+    display: flex;
+    gap: 1.8rem;
+}
+
+nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: var(--transition);
+    position: relative;
+    padding: 4px 0;
+}
+
+nav a:hover {
+    color: var(--primary);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transition: var(--transition);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.btn-carrito-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #0b1120;
+    border: none;
+    padding: 0.65rem 1.2rem;
+    border-radius: 50px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-carrito-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.45);
+}
+
+.btn-carrito-header.animar-rebote {
+    animation: reboteCarrito 0.45s ease;
+}
+
+.badge-contador {
+    background-color: #0b1120;
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+/* ==========================================
+   HERO PRINCIPAL
+========================================== */
+.hero {
+    position: relative;
+    min-height: 82vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 6%;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://cdn.brujulabike.com/uploads/images/emtb_bicicleta_electrina_montana.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+}
+
+.hero:hover .hero-bg {
+    transform: scale(1.1);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(11, 17, 32, 0.72) 0%, rgba(11, 17, 32, 0.96) 100%);
+}
+
+.hero-contenido {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    animation: aparecerTarjeta 0.9s ease-out;
+}
+
+.etiqueta-hero {
+    display: inline-block;
+    background: rgba(0, 229, 255, 0.12);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.4rem 1.1rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.2rem;
+}
+
+.hero-contenido h1 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 3.4rem;
+    line-height: 1.12;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+}
+
+.texto-degradado {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-contenido p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 2.2rem;
+    max-width: 680px;
+    margin-inline: auto;
+}
+
+.hero-botones {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.btn-primario {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #0b1120;
+    text-decoration: none;
+    padding: 1rem 2.4rem;
+    border-radius: 50px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: var(--transition);
+}
+
+.btn-primario:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(163, 230, 53, 0.4);
+}
+
+.btn-secundario {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    text-decoration: none;
+    padding: 1rem 2.4rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: var(--transition);
+}
+
+.btn-secundario:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pista-rodamiento {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.linea-velocidad {
+    width: 25%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--accent));
+    animation: lineaCarril 2.8s linear infinite;
+}
+
+/* ==========================================
+   SECCIONES Y ENCABEZADOS
+========================================== */
+.section {
+    padding: 5rem 7%;
+}
+
+.section.oscuro-suave {
+    background-color: var(--bg-surface);
+}
+
+.encabezado-seccion {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.subtitulo-seccion {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.encabezado-seccion h2 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 2.3rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+/* ==========================================
+   CATÁLOGO DE PRODUCTOS
+========================================== */
+.barra-herramientas-tienda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.filtros {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+
+.btn-filtro {
+    background-color: var(--bg-card);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1.25rem;
+    border-radius: 30px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-filtro:hover,
+.btn-filtro.activo {
+    background: var(--primary);
+    color: #0b1120;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.buscador-caja {
+    width: 100%;
+    max-width: 460px;
+}
+
+.buscador-caja input {
+    width: 100%;
+    padding: 0.85rem 1.3rem;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: inherit;
+    font-size: 0.92rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.buscador-caja input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 2rem;
+}
+
+.producto-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+    animation: aparecerTarjeta 0.5s ease backwards;
+    position: relative;
+}
+
+.producto-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+.producto-img-contenedor {
+    position: relative;
+    overflow: hidden;
+    height: 205px;
+    background-color: #0f172a;
+}
+
+.producto-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.producto-card:hover .producto-img {
+    transform: scale(1.08);
+}
+
+.etiqueta-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(11, 17, 32, 0.88);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.producto-info {
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.producto-categoria {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+}
+
+.producto-info h3 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.producto-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+}
+
+.producto-precio-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.producto-precio {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.btn-agregar {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #0b1120;
+    border: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-agregar:hover {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    transform: scale(1.06);
+}
+
+/* ==========================================
+   BANNER ESTADÍSTICAS
+========================================== */
+.banner-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-surface));
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.stat-num {
+    display: block;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* ==========================================
+   TARJETAS DE TALLER Y GALERÍA
+========================================== */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--bg-card);
+    padding: 2.2rem;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+}
+
+.card-icono {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.card h3 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 0.8rem;
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 1.8rem;
+}
+
+.card button {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 0.75rem 1.4rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    align-self: flex-start;
+}
+
+.card button:hover {
+    background: var(--primary);
+    color: #0b1120;
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
+}
+
+.galeria-item {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+}
+
+.galeria-item img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.galeria-item:hover img {
+    transform: scale(1.08);
+}
+
+.galeria-caption {
+    position: absolute;
+    bottom: 0;
+    inset-inline: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(11, 17, 32, 0.95));
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   FORMULARIO DE CONTACTO
+========================================== */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+}
+
+form textarea {
+    height: 140px;
+    resize: vertical;
+}
+
+form button[type="submit"] {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #0b1120;
+    border: none;
+    padding: 1.1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+form button[type="submit"]:hover {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   TOAST Y CARRITO LATERAL
+========================================== */
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--accent);
+    color: #0b1120;
+    padding: 0.85rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    z-index: 2000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.overlay-carrito {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 17, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 1500;
+    display: none;
+}
+
+.overlay-carrito.activo {
+    display: block;
+}
+
+.panel-carrito {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-color);
+    z-index: 1600;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.6);
+    transition: right 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.panel-carrito.abierto {
+    right: 0;
+}
+
+.carrito-header {
+    background: var(--bg-dark);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.carrito-header h3 {
+    font-family: 'Chakra Petch', sans-serif;
+    color: var(--primary);
+    font-size: 1.3rem;
+}
+
+.btn-cerrar {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-cerrar:hover {
+    color: var(--primary);
+}
+
+.carrito-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.carrito-vacio {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 3rem;
+}
+
+.item-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 10px;
+}
+
+.item-detalles h4 {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 3px;
+}
+
+.item-detalles p {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.item-controles {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cant {
+    background: var(--bg-dark);
+    color: var(--primary);
+    border: 1px solid var(--border-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-cant:hover {
+    background: var(--primary);
+    color: #0b1120;
+}
+
+.carrito-footer {
+    padding: 1.5rem;
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.carrito-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+}
+
+#total-carrito {
+    font-family: 'Chakra Petch', sans-serif;
+    color: var(--accent);
+    font-size: 1.4rem;
+}
+
+.btn-comprar {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #0b1120;
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-comprar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(163, 230, 53, 0.35);
+}
+
+.btn-vaciar {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.65rem;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-vaciar:hover {
+    border-color: #f87171;
+    color: #f87171;
+}
+
+footer {
+    background-color: #070b14;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 3rem 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.88rem;
+}
+
+.footer-logo {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem 4%;
+    }
+    nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .hero-contenido h1 {
+        font-size: 2.2rem;
+    }
+}
